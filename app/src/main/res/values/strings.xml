@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Uniper</string>
     <string name="label_main_activity">Pop movies</string>
+    <string name="button">Button</string>
 </resources>

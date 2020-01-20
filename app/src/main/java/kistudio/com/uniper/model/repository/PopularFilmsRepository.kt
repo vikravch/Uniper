@@ -12,33 +12,30 @@ import kistudio.com.uniper.model.entities.Movie
 import kistudio.com.uniper.model.network.MoviesApi
 
 class PopularFilmsRepository(
-    private val moviesApi:MoviesApi,
-    private val compositeDisposable: CompositeDisposable
+    private val mMoviesApi: MoviesApi,
+    private val mCompositeDisposable: CompositeDisposable
 ) : PageKeyedDataSource<Int, Movie>() {
 
     var state: MutableLiveData<State> = MutableLiveData()
-    private var retryCompletable: Completable? = null
+    private var mRetryCompletable: Completable? = null
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Movie>
     ) {
         updateState(State.LOADING)
-        compositeDisposable.add(
-            moviesApi.getPopularMovies()
+        mCompositeDisposable.add(
+            mMoviesApi.getPopularMovies()
                 .subscribe(
                     { response ->
                         updateState(State.DONE)
-                        Log.d("Uniper","done - $response")
-                        callback.onResult(response.results,
-                             null,
-                            2
-                        )
+                        //Log.d("Uniper", "done - $response")
+                        callback.onResult(response.results, null, 2)
                     },
                     {
                         updateState(State.ERROR)
                         setRetry(Action { loadInitial(params, callback) })
-                        Log.d("Uniper","Error - $it")
+                        //Log.d("Uniper", "Error - $it")
                     }
                 )
         )
@@ -46,12 +43,13 @@ class PopularFilmsRepository(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         updateState(State.LOADING)
-        compositeDisposable.add(
-            moviesApi.getPopularMovies(params.key)
+        mCompositeDisposable.add(
+            mMoviesApi.getPopularMovies(params.key)
                 .subscribe(
                     { response ->
                         updateState(State.DONE)
-                        callback.onResult(response.results,
+                        callback.onResult(
+                            response.results,
                             params.key + 1
                         )
                     },
@@ -70,21 +68,20 @@ class PopularFilmsRepository(
     }
 
     fun retry() {
-        Log.d("Uniper","Retry")
 
-        if (retryCompletable != null) {
-            compositeDisposable.add(retryCompletable!!
+        if (mRetryCompletable != null) {
+            mCompositeDisposable.add(mRetryCompletable!!
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {},
-                    { err -> Log.d("Uniper","Error - $err") }
+                    { err -> Log.d("Uniper", "Error - $err") }
                 ))
         }
     }
 
     private fun setRetry(action: Action?) {
-        retryCompletable = if (action == null) null else Completable.fromAction(action)
+        mRetryCompletable = if (action == null) null else Completable.fromAction(action)
     }
 }
 

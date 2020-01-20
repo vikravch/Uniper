@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="kistudio.com.uniper.view.detail_activity.DetailActivityViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ededed">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:mutableTitle="@{viewModel.title}"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".view.detail_activity.DetailActivity">
+
+                <kistudio.com.uniper.view.custom_views.ImageUrlView
+                    android:id="@+id/iuPoster"
+                    android:layout_width="160dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="16dp"
+                    mutableUrl="@{viewModel.banner}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    mutableText="@{viewModel.title}"
+                    app:layout_constraintLeft_toRightOf="@+id/iuPoster"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="16dp" />
+
+                <TextView
+                    android:id="@+id/tvRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    mutableText="@{viewModel.rate}"
+                    android:layout_margin="16dp"
+                    app:layout_constraintLeft_toRightOf="@+id/iuPoster"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button"
+                    android:layout_margin="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRate"
+                    app:layout_constraintLeft_toRightOf="@+id/iuPoster" />
+
+                <TextView
+                    android:id="@+id/tvDetailed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Detailed"
+                    mutableText="@{viewModel.detailed}"
+                    app:layout_constraintTop_toBottomOf="@id/iuPoster"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

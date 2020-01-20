@@ -5,33 +5,34 @@
     <data>
         <variable
             name="viewModel"
-            type="kistudio.com.uniper.view_model.ItemViewModel" />
+            type="kistudio.com.uniper.view.main_activity.ItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <kistudio.com.uniper.view.MovieView
+        <kistudio.com.uniper.view.custom_views.MovieView
             android:id="@+id/ivAvatarFirst"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
             android:scaleType="fitCenter"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/ivAvatarSecond"
             app:layout_constraintTop_toTopOf="parent"
-            mutableMovie="@{viewModel.firstMovie}"
+            app:url="@{viewModel.firstMovieBanner}"
+            movie="@{viewModel.firstMovie}"
             android:onClick="@{(view)->viewModel.clickOnElement(view)}"/>
 
-        <kistudio.com.uniper.view.MovieView
+        <kistudio.com.uniper.view.custom_views.MovieView
             android:id="@+id/ivAvatarSecond"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/ivAvatarFirst"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            mutableMovie="@{viewModel.secondMovie}"
+            app:url="@{viewModel.secondMovieBanner}"
+            movie="@{viewModel.secondMovie}"
             android:onClick="@{(view)->viewModel.clickOnElement(view)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

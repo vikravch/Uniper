@@ -37,8 +37,16 @@ object NetworkModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providePopularFilmsRepository(moviesApi: MoviesApi): PopularFilmsRepository {
-        return PopularFilmsRepository(moviesApi, CompositeDisposable())
+    internal fun provideCompositeDisposable(): CompositeDisposable {
+        return CompositeDisposable()
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun providePopularFilmsRepository(moviesApi: MoviesApi,
+                                               compositeDisposable: CompositeDisposable): PopularFilmsRepository {
+        return PopularFilmsRepository(moviesApi, compositeDisposable)
     }
 
     @Provides
