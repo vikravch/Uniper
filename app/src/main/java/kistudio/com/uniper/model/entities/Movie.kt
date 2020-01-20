@@ -10,4 +10,8 @@ data class Movie(val id:Int,
                  @field:Json(name = "poster_path") val posterPath:String,
                  @field:Json(name = "backdrop_path") val backdropPath:String,
                  val popularity:String,
-                 @field:Json(name = "vote_count") val voteCount:Int)
+                 @field:Json(name = "vote_count") val voteCount:Int){
+
+    constructor():this(0,"","","","",
+        "","","",0)
+}

@@ -10,6 +10,7 @@ import androidx.paging.LivePagedListBuilder
 import kistudio.com.uniper.R
 import kistudio.com.uniper.databinding.ActivityMainBinding
 import kistudio.com.uniper.view_model.MainActivityViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,11 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-
-        val newsList = LivePagedListBuilder(viewModel.popularFilmsFactory, viewModel.config).build()
-        newsList.observe(this, Observer {
+        viewModel.popularMoviesList.observe(this, Observer {
             Log.d("tag", "updated! ${it.size}")
-            //postListAdapter.submitList(it)
+            viewModel.moviesMainAdapter.submitList(it)
         })
 
         binding.viewModel = viewModel
